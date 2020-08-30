@@ -18,6 +18,12 @@ void RemarkableUserData::setHomeDir(QString hd)
     homeDirectory.setPath(hd + ".local/share/remarkable/xochitl/");
 }
 
+const QDir RemarkableUserData::getHomeDir()
+{
+    return homeDirectory;
+}
+
+
 void RemarkableUserData::startDebug()
 {
     // Temporary. Will iterate all uuids and get info

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
+#include <QFile>
 #include "utilities.h"
 #include "remarkableuserdata.h"
 

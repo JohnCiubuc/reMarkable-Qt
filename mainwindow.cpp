@@ -44,7 +44,6 @@ void MainWindow::on_pushButton_ImportNewFile_clicked()
 
     if(fileName.isEmpty()) return;
 
-    db fileName;
     uuid_t uuid;
     uuid_generate(uuid);
 
@@ -52,7 +51,11 @@ void MainWindow::on_pushButton_ImportNewFile_clicked()
     uuid_unparse_lower(uuid, uuid_str);
 
     QString uuid_s = QString(uuid_str);
-    db uuid_s;
+
+    QFile source(fileName);
+    // TODO:
+    QString out = reMarkable->getHomeDir().path() + "/" + uuid_s + ".pdf";
+//    QFile::copy(fileName, out);
 }
 
 void MainWindow::on_pushButton_DeleteFile_clicked()

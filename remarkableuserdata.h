@@ -16,6 +16,8 @@ public:
 
     void setHomeDir(QString hd);
 
+    const QDir getHomeDir();
+
     void startDebug();
 signals:
     void ready();
