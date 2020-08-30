@@ -5,15 +5,19 @@ RemarkableFileContent::RemarkableFileContent(QObject *parent) : QObject(parent)
 
 }
 
-RemarkableFileContent::RemarkableFileContent(QByteArray contentJson)
+RemarkableFileContent::RemarkableFileContent(QByteArray contentJson, QString uuid)
 {
 
     doc = QJsonDocument::fromJson(contentJson);
-
-    db fileName();
+    fileUUIDString = uuid;
 }
 
-const QString RemarkableFileContent::fileName()
+const QString RemarkableFileContent::getFileDisplayName()
 {
     return doc["visibleName"].toString();
+}
+
+const QString RemarkableFileContent::getFileUUID()
+{
+    return fileUUIDString;
 }

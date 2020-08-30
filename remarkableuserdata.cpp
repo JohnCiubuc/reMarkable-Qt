@@ -1,5 +1,13 @@
 #include "remarkableuserdata.h"
 
+QStringList RemarkableUserData::getPDFs()
+{
+    QStringList pdfs;
+    for (auto rFC : remarkableFiles)
+        pdfs << rFC->getFileDisplayName();
+    return pdfs;
+}
+
 RemarkableUserData::RemarkableUserData(QObject *parent) : QObject(parent)
 {
 
@@ -16,21 +24,19 @@ void RemarkableUserData::startDebug()
     // for now it's for my use case of pdfs only
 
     QStringList pdfs = homeDirectory.entryList(QStringList() << "*.pdf", QDir::Files);
-    for(auto s : pdfs)
+    for(auto fileUUID : pdfs)
     {
-        //just name
-        s.chop(4);
-
-//        db s;
-//        db  homeDirectory.entryList(QStringList() << s+".*", QDir::Files);
-        for (auto fileDescriptor : homeDirectory.entryList(QStringList() << s+".*", QDir::Files))
+        //just get the name/uuid
+        fileUUID.chop(4);
+        for (auto fileDescriptor : homeDirectory.entryList(QStringList() << fileUUID+".*", QDir::Files))
         {
             if(fileDescriptor.contains("metadata"))
             {
                 QFile f(homeDirectory.path() + "/"+  fileDescriptor);
                 if(f.open(QFile::ReadOnly))
-                    RemarkableFileContent rFC(f.readAll());
+                    remarkableFiles << new RemarkableFileContent(f.readAll(), fileUUID);
             }
         }
     }
+    emit ready();
 }

@@ -13,13 +13,15 @@ class RemarkableFileContent : public QObject
 public:
     explicit RemarkableFileContent(QObject *parent = nullptr);
 
-    RemarkableFileContent(QByteArray contentJson);
+    RemarkableFileContent(QByteArray contentJson, QString uuid);
 
-    const QString fileName();
+    const QString getFileDisplayName();
+    const QString getFileUUID();
 signals:
 
 private:
     QJsonDocument doc;
+    QString fileUUIDString;
 };
 
 #endif // REMARKABLEFILECONTENT_H
