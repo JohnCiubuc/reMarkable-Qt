@@ -10,10 +10,15 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    remarkablefilecontent.cpp \
+    remarkableuserdata.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    remarkablefilecontent.h \
+    remarkableuserdata.h \
+    utilities.h
 
 FORMS += \
     mainwindow.ui
