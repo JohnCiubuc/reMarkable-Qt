@@ -8,19 +8,33 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    const QString remarkDataDir = "/home/inathero/ReMarkable/home/root/";
 
+    rSSH = new RemarkableSSH("10.11.99.1");
+    rSSH->mountToTemp();
 
     reMarkable = new RemarkableUserData(this);
     connect(reMarkable, &RemarkableUserData::ready, this, &MainWindow::remarkableReady);
-    reMarkable->setHomeDir(remarkDataDir);
-    reMarkable->startDebug();
+    // Delay for mounting
 
-    rSSH = new RemarkableSSH("10.11.99.1");
+    QTimer* timer = new QTimer;
+    QObject::connect(timer, &QTimer::timeout, [this, timer]()
+    {
+        QDir dir(rSSH->getHomeDir());
+        if(dir.exists())
+        {
+            reMarkable->setHomeDir(rSSH->getHomeDir());
+            reMarkable->startDebug();
+            timer->deleteLater();
+        }
+    });
+    connect(timer, &QTimer::timeout, timer, &QTimer::deleteLater);
+    timer->start(100);
+
 }
 
 MainWindow::~MainWindow()
 {
+    rSSH->unmountFromTemp();
     delete ui;
 }
 

@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QDir>
+#include <QTimer>
 #include "utilities.h"
 #include "remarkableuserdata.h"
 #include "remarkablessh.h"

@@ -21,23 +21,21 @@ where server_ip_address can be found via `Menu->Settings->About->Bottom left (sc
 
 Then the following needs to be done till I make it friendly:
 
-	1. sshfs remarkable somewhere
-	2. change line 11 in mainwindow.cpp with new directory
-	3. change line 19 in mainwindow.cpp with new ip
+	1. change line 12 in mainwindow.cpp with new ip
 
 
 ## Build Instructions
 ```bash
 git clone https://github.com/JohnCiubuc/reMarkable-Qt
 cd reMarkable-Qt
-# -> Change line 11 in mainwindow.cpp with new directory <-
-# -> Change IP on Line 19 in mainwindow.cpp <-
+# -> Change IP on Line 12 in mainwindow.cpp <-
 mkdir build && cd build
 cmake .. && make
 ```
 
 # Usage Instructions
 
+* On startup, if IP is valid, should auto-mount the tablet to a random /tmp dir and connect to it
 * Import new file lets you import a new PDF to your tablet
 	* No progress bar on copy
 	* Auto-refreshes when import is done
@@ -61,8 +59,6 @@ cmake .. && make
 
 # TODO
 
-* sshfs auto-mount for tablet
-	* directory mount?
 * progress bar?
 * Drag and drop
 * Ip easy entry
