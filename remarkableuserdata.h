@@ -16,7 +16,7 @@ public:
 
     void setHomeDir(QString hd);
 
-    const QDir getHomeDir();
+    QDir getHomeDir();
     const QString getUUIDFromName(QString fileName);
 
     QString generateContent(QString uuid);

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QFile>
+#include <QDir>
 #include "utilities.h"
 #include "remarkableuserdata.h"
 

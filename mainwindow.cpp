@@ -44,6 +44,7 @@ void MainWindow::on_pushButton_ImportNewFile_clicked()
 
     if(fileName.isEmpty()) return;
 
+
     uuid_t uuid;
     uuid_generate(uuid);
 
@@ -79,5 +80,16 @@ void MainWindow::on_pushButton_DeleteFile_clicked()
     for(auto a: ui->listWidget->selectedItems())
     {
         auto uuid = reMarkable->getUUIDFromName( a->text());
+        QFile config(reMarkable->getHomeDir().path() + "/" + uuid + ".metadata");
+        if(config.open(QFile::ReadWrite))
+        {
+            QJsonDocument doc = QJsonDocument::fromJson(config.readAll());
+            QJsonObject obj = doc.object();
+            obj["deleted"] = true;
+            config.resize(0);
+            config.write(QJsonDocument(obj).toJson());
+        }
     }
+    ui->listWidget->clear();
+    reMarkable->startDebug();
 }

@@ -18,7 +18,7 @@ void RemarkableUserData::setHomeDir(QString hd)
     homeDirectory.setPath(hd + ".local/share/remarkable/xochitl/");
 }
 
-const QDir RemarkableUserData::getHomeDir()
+QDir RemarkableUserData::getHomeDir()
 {
     return homeDirectory;
 }
