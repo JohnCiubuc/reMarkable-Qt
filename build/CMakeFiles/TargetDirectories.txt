@@ -1,4 +1,0 @@
-/home/inathero/Gits/reMarkable-Qt/build/CMakeFiles/rebuild_cache.dir
-/home/inathero/Gits/reMarkable-Qt/build/CMakeFiles/edit_cache.dir
-/home/inathero/Gits/reMarkable-Qt/build/CMakeFiles/remarkable-qt.dir
-/home/inathero/Gits/reMarkable-Qt/build/CMakeFiles/remarkable-qt_autogen.dir

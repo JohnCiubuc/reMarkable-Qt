@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/thumbnail">
-        <file>Images/pdf.png</file>
-    </qresource>
-</RCC>
