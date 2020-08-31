@@ -19,6 +19,10 @@ public:
     const QDir getHomeDir();
     const QString getUUIDFromName(QString fileName);
 
+    QString generateContent(QString uuid);
+    QString generateMetadata(QString fileName);
+    QString generatePagedata(QString uuid);
+
     void startDebug();
 signals:
     void ready();

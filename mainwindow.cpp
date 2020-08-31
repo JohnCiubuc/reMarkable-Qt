@@ -55,11 +55,29 @@ void MainWindow::on_pushButton_ImportNewFile_clicked()
     QFile source(fileName);
     // TODO:
     QString out = reMarkable->getHomeDir().path() + "/" + uuid_s + ".pdf";
-//    QFile::copy(fileName, out);
+    QFileInfo fileInfo(source.fileName());
+    QFile meta(reMarkable->getHomeDir().path() + "/" + uuid_s + ".metadata");
+    if(meta.open(QFile::WriteOnly))
+    {
+        meta.write(reMarkable->generateMetadata(fileInfo.fileName()).toLocal8Bit());
+        meta.close();
+    }
+    meta.setFileName(reMarkable->getHomeDir().path() + "/" + uuid_s + ".content");
+    if(meta.open(QFile::WriteOnly))
+    {
+        meta.write(reMarkable->generateContent(fileInfo.fileName()).toLocal8Bit());
+        meta.close();
+    }
+    QFile::copy(fileName, out);
+
+    ui->listWidget->clear();
+    reMarkable->startDebug();
 }
 
 void MainWindow::on_pushButton_DeleteFile_clicked()
 {
     for(auto a: ui->listWidget->selectedItems())
-        db reMarkable->getUUIDFromName( a->text());
+    {
+        auto uuid = reMarkable->getUUIDFromName( a->text());
+    }
 }
