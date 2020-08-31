@@ -92,6 +92,8 @@ void MainWindow::on_pushButton_DeleteFile_clicked()
             obj["deleted"] = true;
             config.resize(0);
             config.write(QJsonDocument(obj).toJson());
+            config.close();
+            QFile::remove(reMarkable->getHomeDir().path() + "/" + uuid + ".pdf");
         }
     }
     ui->listWidget->clear();
