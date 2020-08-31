@@ -12,11 +12,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     remarkablefilecontent.cpp \
+    remarkablessh.cpp \
     remarkableuserdata.cpp
 
 HEADERS += \
     mainwindow.h \
     remarkablefilecontent.h \
+    remarkablessh.h \
     remarkableuserdata.h \
     utilities.h
 

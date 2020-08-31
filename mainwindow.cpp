@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(reMarkable, &RemarkableUserData::ready, this, &MainWindow::remarkableReady);
     reMarkable->setHomeDir(remarkDataDir);
     reMarkable->startDebug();
+
+    rSSH = new RemarkableSSH("10.11.99.1");
 }
 
 MainWindow::~MainWindow()
@@ -92,4 +94,23 @@ void MainWindow::on_pushButton_DeleteFile_clicked()
     }
     ui->listWidget->clear();
     reMarkable->startDebug();
+}
+
+void MainWindow::on_pushButton_Sync_clicked()
+{
+    db "restartXochitl";
+    rSSH->restartXochitl();
+}
+
+void MainWindow::on_pushButton_Refresh_clicked()
+{
+    db "refreshListView";
+    ui->listWidget->clear();
+    reMarkable->startDebug();
+}
+
+void MainWindow::on_pushButton_Reboot_clicked()
+{
+    db "rebootDevice";
+    rSSH->rebootDevice();
 }
