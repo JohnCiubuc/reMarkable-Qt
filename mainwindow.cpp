@@ -73,6 +73,8 @@ void MainWindow::on_pushButton_ImportNewFile_clicked()
     }
     QFile::copy(fileName, out);
 
+    reMarkable->generateThumbnail(uuid_s, fileName);
+
     ui->listWidget->clear();
     reMarkable->startDebug();
 }

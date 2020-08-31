@@ -88,6 +88,26 @@ QString RemarkableUserData::generatePagedata(QString uuid)
     return QString("Blank");
 }
 
+void RemarkableUserData::generateThumbnail(QString uuid, QString fileNameAndPath)
+{
+
+    QStringList args;
+    args << "-density";
+    args << "300";
+    args << fileNameAndPath+"'[0]'";
+    args << "-colorspace";
+    args << "Gray";
+    args << "-separate";
+    args << "-average";
+    args << "-shave";
+    args << "5%x5%";
+    args << "-resize";
+    args << "280x374";
+    args << getHomeDir().path() + "/" + uuid + ".thumbnails/0.jpg";
+    QProcess *p=new QProcess;
+    p->start("convert", args);
+}
+
 
 void RemarkableUserData::startDebug()
 {

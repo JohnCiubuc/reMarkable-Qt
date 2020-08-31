@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QFile>
 #include <QDir>
+#include <QProcess>
 #include "utilities.h"
 #include "remarkablefilecontent.h"
 class RemarkableUserData : public QObject
@@ -22,6 +23,7 @@ public:
     QString generateContent(QString uuid);
     QString generateMetadata(QString fileName);
     QString generatePagedata(QString uuid);
+    void generateThumbnail(QString uuid, QString fileNameAndPath);
 
     void startDebug();
 signals:

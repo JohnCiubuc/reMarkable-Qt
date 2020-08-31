@@ -26,12 +26,12 @@ void RemarkableSSH::startXochitl()
 
 void RemarkableSSH::rebootDevice()
 {
-    ssh->start("ssh", QStringList() << login << "reboot");
+    ssh->start("ssh", QStringList() << login << "systemctl" << "reboot");
 }
 
 void RemarkableSSH::shutdownDevice()
 {
-    ssh->start("ssh", QStringList() << login << "shutdown" << "now");
+    ssh->start("ssh", QStringList() << login <<"systemctl" << "shutdown" );
 }
 
 void RemarkableSSH::readyReadStandardOutput()
