@@ -60,5 +60,6 @@ void MainWindow::on_pushButton_ImportNewFile_clicked()
 
 void MainWindow::on_pushButton_DeleteFile_clicked()
 {
-
+    for(auto a: ui->listWidget->selectedItems())
+        db reMarkable->getUUIDFromName( a->text());
 }

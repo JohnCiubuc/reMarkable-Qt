@@ -17,6 +17,7 @@ public:
     void setHomeDir(QString hd);
 
     const QDir getHomeDir();
+    const QString getUUIDFromName(QString fileName);
 
     void startDebug();
 signals:

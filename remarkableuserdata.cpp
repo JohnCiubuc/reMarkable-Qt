@@ -23,6 +23,15 @@ const QDir RemarkableUserData::getHomeDir()
     return homeDirectory;
 }
 
+const QString RemarkableUserData::getUUIDFromName(QString fileName)
+{
+    for (auto rFC : remarkableFiles)
+        if(rFC->getFileDisplayName() == fileName)
+            return rFC->getFileUUID();
+
+    return QString();
+}
+
 
 void RemarkableUserData::startDebug()
 {
