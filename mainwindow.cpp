@@ -63,6 +63,14 @@ void MainWindow::remarkableReady()
         ui->listWidget->addItem(i);
         widgetMap.insert(i, folder);
     }
+    for (auto file : reMarkable->getFiles())
+    {
+        QListWidgetItem * i = new QListWidgetItem;
+        i->setText(file->getFileDisplayName());
+        i->setIcon(QIcon(":/thumbnail/Images/x-office-document.png"));
+        ui->listWidget->addItem(i);
+        widgetMap.insert(i, file);
+    }
 }
 
 

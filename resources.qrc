@@ -4,5 +4,6 @@
         <file>Images/folder-documents.png</file>
         <file>Images/folder-drag-accept.png</file>
         <file>Images/user-home.png</file>
+        <file>Images/x-office-document.png</file>
     </qresource>
 </RCC>

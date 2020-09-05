@@ -32,6 +32,31 @@ const QList<RemarkableFileContent *> RemarkableUserData::getFolders()
     return QList<RemarkableFileContent*>();
 }
 
+const QList<RemarkableFileContent *> RemarkableUserData::getFiles()
+{
+    if(parentUUID.isEmpty())
+    {
+        QList<RemarkableFileContent*> out;
+        for(auto folder:remarkableFiles)
+        {
+            if(folder->getParent().isEmpty())
+                out << folder;
+        }
+        return out;
+    }
+    else
+    {
+        QList<RemarkableFileContent*> out;
+        for(auto folder:remarkableFiles)
+        {
+            if(folder->getParent() == parentUUID)
+                out << folder;
+        }
+        return out;
+    }
+    return QList<RemarkableFileContent*>();
+}
+
 void RemarkableUserData::enterFolder(RemarkableFileContent *rfc)
 {
     if(rfc->getFileUUID() == "parent")
@@ -154,6 +179,8 @@ void RemarkableUserData::generateThumbnail(QString uuid, QString fileNameAndPath
 void RemarkableUserData::startDebug()
 {
     remarkableFiles.clear();
+    remarkableFolders.clear();
+    tempRemPdf.clear();
     // Temporary. Will iterate all uuids and get info
     // for now it's for my use case of pdfs only
 
@@ -168,7 +195,7 @@ void RemarkableUserData::startDebug()
             {
                 QFile f(homeDirectory.path() + "/"+  fileDescriptor);
                 if(f.open(QFile::ReadOnly))
-                    remarkableFiles << new RemarkableFileContent(f.readAll(), fileUUID);
+                    tempRemPdf << new RemarkableFileContent(f.readAll(), fileUUID);
             }
         }
     }
@@ -176,8 +203,6 @@ void RemarkableUserData::startDebug()
     QStringList metadata = homeDirectory.entryList(QStringList() << "*.metadata", QDir::Files);
     for(auto fileUUID : metadata)
     {
-        //just get the name/uuid
-//        fileUUID.chop(10);
 
         QFile f(homeDirectory.path() + "/"+  fileUUID);
         if(f.open(QFile::ReadOnly))
@@ -186,24 +211,10 @@ void RemarkableUserData::startDebug()
             auto rfc =  new RemarkableFileContent(f.readAll(), fileUUID.mid(0,fileUUID.size()-9));
             if(rfc->getType() == "CollectionType")
                 remarkableFolders << rfc;
-            // not true for everything
             else
-                delete rfc;
+                remarkableFiles << rfc;
             f.close();
         }
-//        for (auto fileDescriptor : homeDirectory.entryList(QStringList() << fileUUID+".*", QDir::Files))
-//        {
-//            if(fileDescriptor.contains("metadata"))
-//            {
-//                QFile f(homeDirectory.path() + "/"+  fileDescriptor);
-//                if(f.open(QFile::ReadOnly))
-//                    remarkableFiles << new RemarkableFileContent(f.readAll(), fileUUID);
-//            }
-//        }
-    }
-    for (auto folder : remarkableFolders)
-    {
-        db folder->getFileDisplayName() <<" --- "<< folder->getFileUUID();
     }
     emit ready();
 }

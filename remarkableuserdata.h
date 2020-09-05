@@ -13,16 +13,17 @@ class RemarkableUserData : public QObject
 public slots:
     const QList<RemarkableFileContent*> getPDFs()
     {
-        if(parentUUID.isEmpty()) return remarkableFiles;
+        if(parentUUID.isEmpty()) return tempRemPdf;
         else return QList<RemarkableFileContent*>();
         QList<RemarkableFileContent*> out;
 
         //    QStringList pdfs;
         //    for (auto rFC : remarkableFiles)
         //        pdfs << rFC->getFileDisplayName();
-        return remarkableFiles;
+        return tempRemPdf;
     }
     const QList<RemarkableFileContent*> getFolders();
+    const QList<RemarkableFileContent*> getFiles();
     void enterFolder(RemarkableFileContent * rfc);
 public:
     explicit RemarkableUserData(QObject *parent = nullptr);
@@ -46,6 +47,7 @@ private:
     QString parentUUID;
     QString grandParentUUID;
     QList<RemarkableFileContent*> remarkableFiles;
+    QList<RemarkableFileContent*> tempRemPdf;
     QList<RemarkableFileContent*> remarkableNotes;
     QList<RemarkableFileContent*> remarkableFolders;
 };
