@@ -11,11 +11,19 @@ class RemarkableUserData : public QObject
 {
     Q_OBJECT
 public slots:
-    QStringList getPDFs();
-    const QList<RemarkableFileContent*> getFolders()
+    const QList<RemarkableFileContent*> getPDFs()
     {
-        return remarkableFolders;
+        if(parentUUID.isEmpty()) return remarkableFiles;
+        else return QList<RemarkableFileContent*>();
+        QList<RemarkableFileContent*> out;
+
+        //    QStringList pdfs;
+        //    for (auto rFC : remarkableFiles)
+        //        pdfs << rFC->getFileDisplayName();
+        return remarkableFiles;
     }
+    const QList<RemarkableFileContent*> getFolders();
+    void enterFolder(RemarkableFileContent * rfc);
 public:
     explicit RemarkableUserData(QObject *parent = nullptr);
 
@@ -35,6 +43,7 @@ signals:
 private:
     QDir homeDirectory;
 
+    QString parentUUID;
     QList<RemarkableFileContent*> remarkableFiles;
     QList<RemarkableFileContent*> remarkableNotes;
     QList<RemarkableFileContent*> remarkableFolders;

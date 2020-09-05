@@ -1,11 +1,36 @@
 #include "remarkableuserdata.h"
 
-QStringList RemarkableUserData::getPDFs()
+
+
+const QList<RemarkableFileContent *> RemarkableUserData::getFolders()
 {
-    QStringList pdfs;
-    for (auto rFC : remarkableFiles)
-        pdfs << rFC->getFileDisplayName();
-    return pdfs;
+    if(parentUUID.isEmpty())
+    {
+        QList<RemarkableFileContent*> out;
+        for(auto folder:remarkableFolders)
+        {
+            if(folder->getParent().isEmpty())
+                out << folder;
+        }
+        return out;
+    }
+    else
+    {
+        QList<RemarkableFileContent*> out;
+        for(auto folder:remarkableFolders)
+        {
+            if(folder->getParent() == parentUUID)
+                out << folder;
+        }
+        return out;
+    }
+    return QList<RemarkableFileContent*>();
+}
+
+void RemarkableUserData::enterFolder(RemarkableFileContent *rfc)
+{
+    parentUUID = rfc->getFileUUID();
+    emit ready();
 }
 
 RemarkableUserData::RemarkableUserData(QObject *parent) : QObject(parent)
@@ -146,7 +171,7 @@ void RemarkableUserData::startDebug()
                 remarkableFolders << rfc;
             // not true for everything
             else
-                remarkableNotes << rfc;
+                delete rfc;
             f.close();
         }
 //        for (auto fileDescriptor : homeDirectory.entryList(QStringList() << fileUUID+".*", QDir::Files))

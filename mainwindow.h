@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QDir>
 #include <QTimer>
+#include <QListWidgetItem>
 #include "utilities.h"
 #include "remarkableuserdata.h"
 #include "remarkablessh.h"
@@ -37,9 +38,12 @@ private slots:
 
     void on_pushButton_Reboot_clicked();
 
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
     RemarkableUserData * reMarkable;
     RemarkableSSH * rSSH;
+    QMap<QListWidgetItem *,  RemarkableFileContent*> widgetMap;
 };
 #endif // MAINWINDOW_H

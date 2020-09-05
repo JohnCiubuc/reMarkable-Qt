@@ -42,24 +42,27 @@ MainWindow::~MainWindow()
 void MainWindow::remarkableReady()
 {
 
+    ui->listWidget->clear();
+    widgetMap.clear();
     // Remarkable has all files (pdfs currently)
-    QStringList allPDfs = reMarkable->getPDFs();
-    for (auto string : allPDfs)
+    for (auto string : reMarkable->getPDFs())
     {
         QListWidgetItem * i = new QListWidgetItem;
-        i->setText(string);
+        i->setText(string->getFileDisplayName());
         i->setIcon(QIcon(":/thumbnail/Images/pdf.png"));
         ui->listWidget->addItem(i);
+        widgetMap.insert(i, string);
     }
     for (auto folder : reMarkable->getFolders())
     {
-        if(folder->getParent().isEmpty())
-        {
-            QListWidgetItem * i = new QListWidgetItem;
-            i->setText(folder->getFileDisplayName());
-            i->setIcon(QIcon(":/thumbnail/Images/folder-documents.png"));
-            ui->listWidget->addItem(i);
-        }
+//        if(folder->getParent().isEmpty())
+//        {
+        QListWidgetItem * i = new QListWidgetItem;
+        i->setText(folder->getFileDisplayName());
+        i->setIcon(QIcon(":/thumbnail/Images/folder-documents.png"));
+        ui->listWidget->addItem(i);
+        widgetMap.insert(i, folder);
+//        }
     }
 }
 
@@ -142,4 +145,14 @@ void MainWindow::on_pushButton_Reboot_clicked()
 {
     db "rebootDevice";
     rSSH->rebootDevice();
+}
+
+void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    RemarkableFileContent* rfc = widgetMap.value(item);
+    if(rfc->getType() == "CollectionType")
+    {
+        db "Enter Folder - " << rfc->getFileDisplayName();
+        reMarkable->enterFolder(rfc);
+    }
 }
