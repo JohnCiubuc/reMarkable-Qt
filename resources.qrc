@@ -3,5 +3,6 @@
         <file>Images/pdf.png</file>
         <file>Images/folder-documents.png</file>
         <file>Images/folder-drag-accept.png</file>
+        <file>Images/user-home.png</file>
     </qresource>
 </RCC>

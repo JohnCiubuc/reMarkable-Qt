@@ -55,14 +55,13 @@ void MainWindow::remarkableReady()
     }
     for (auto folder : reMarkable->getFolders())
     {
-//        if(folder->getParent().isEmpty())
-//        {
         QListWidgetItem * i = new QListWidgetItem;
         i->setText(folder->getFileDisplayName());
-        i->setIcon(QIcon(":/thumbnail/Images/folder-documents.png"));
+        i->setIcon(folder->getFileUUID() == "parent" ?
+                   QIcon(":/thumbnail/Images/user-home.png") :
+                   QIcon(":/thumbnail/Images/folder-documents.png"));
         ui->listWidget->addItem(i);
         widgetMap.insert(i, folder);
-//        }
     }
 }
 

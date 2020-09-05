@@ -17,6 +17,11 @@ const QList<RemarkableFileContent *> RemarkableUserData::getFolders()
     else
     {
         QList<RemarkableFileContent*> out;
+        QJsonObject temp;
+        temp["parent"] = parentUUID;
+        temp["type"] = "CollectionType";
+        temp["visibleName"] = "Go Back";
+        out << new RemarkableFileContent(QJsonDocument(temp).toJson(), "parent");
         for(auto folder:remarkableFolders)
         {
             if(folder->getParent() == parentUUID)
@@ -29,7 +34,19 @@ const QList<RemarkableFileContent *> RemarkableUserData::getFolders()
 
 void RemarkableUserData::enterFolder(RemarkableFileContent *rfc)
 {
-    parentUUID = rfc->getFileUUID();
+    if(rfc->getFileUUID() == "parent")
+    {
+        for (auto folder:remarkableFolders)
+        {
+            if(folder->getFileUUID() == rfc->getParent())
+            {
+                parentUUID = folder->getParent();
+                break;
+            }
+        }
+    }
+    else
+        parentUUID = rfc->getFileUUID();
     emit ready();
 }
 

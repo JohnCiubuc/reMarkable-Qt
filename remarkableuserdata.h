@@ -44,6 +44,7 @@ private:
     QDir homeDirectory;
 
     QString parentUUID;
+    QString grandParentUUID;
     QList<RemarkableFileContent*> remarkableFiles;
     QList<RemarkableFileContent*> remarkableNotes;
     QList<RemarkableFileContent*> remarkableFolders;
