@@ -67,7 +67,7 @@ void MainWindow::remarkableReady()
     {
         QListWidgetItem * i = new QListWidgetItem;
         i->setText(file->getFileDisplayName());
-        i->setIcon(QIcon(":/thumbnail/Images/x-office-document.png"));
+        i->setIcon(QIcon(reMarkable->requestThumbnail(file->getFileUUID())));
         ui->listWidget->addItem(i);
         widgetMap.insert(i, file);
     }

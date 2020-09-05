@@ -57,6 +57,26 @@ const QList<RemarkableFileContent *> RemarkableUserData::getFiles()
     return QList<RemarkableFileContent*>();
 }
 
+const QString RemarkableUserData::requestThumbnail(QString uuid)
+{
+    QFile f(homeDirectory.path() + "/"+  uuid + ".content");
+    QString thumbnailId;
+    if(f.open(QFile::ReadOnly))
+    {
+        QJsonDocument doc = QJsonDocument::fromJson(f.readAll());
+        int lastPage = doc["lastOpenedPage"].toInt();
+        QJsonArray array = doc["pages"].toArray();
+        return homeDirectory.path() +
+               "/" +
+               uuid +
+               ".thumbnails/" +
+               array.at(lastPage).toString();
+    }
+    else
+        return QString();
+
+}
+
 void RemarkableUserData::enterFolder(RemarkableFileContent *rfc)
 {
     if(rfc->getFileUUID() == "parent")

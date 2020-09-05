@@ -24,6 +24,7 @@ public slots:
     }
     const QList<RemarkableFileContent*> getFolders();
     const QList<RemarkableFileContent*> getFiles();
+    const QString requestThumbnail(QString uuid);
     void enterFolder(RemarkableFileContent * rfc);
 public:
     explicit RemarkableUserData(QObject *parent = nullptr);
