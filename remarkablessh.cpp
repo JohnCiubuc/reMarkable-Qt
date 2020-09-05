@@ -1,5 +1,16 @@
 #include "remarkablessh.h"
 
+enum ev_rem_types_enum
+{
+    ev_type_abs = 3,
+
+    ev_code_xpos = 1,
+    ev_code_ypos = 0,
+    ev_code_pressure = 24,
+    ev_code_distance = 25,
+    ev_code_xtilt = 26,
+    ev_code_ytilt = 27
+};
 
 RemarkableSSH::RemarkableSSH(QString ip)
 {
@@ -69,13 +80,18 @@ void RemarkableSSH::unmountFromTemp()
     ssh->start("umount", QStringList() << "/tmp/" + uuid_dir );
 }
 
+void RemarkableSSH::runDebug()
+{
+    ssh->start("ssh", QStringList() << "cat" <<"/dev/input/event0" );
+}
+
 void RemarkableSSH::readyReadStandardOutput()
 {
     db ssh->readAllStandardOutput();
     //    ssh->write("ls");
 }
 
-void RemarkableSSH::finished(int exitCode, QProcess::ExitStatus exitStatus)
+void RemarkableSSH::finished(int exitCode)
 {
     db "finished; Exitcode: " << exitCode;
     if(bUmount)

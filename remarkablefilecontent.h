@@ -11,12 +11,26 @@ class RemarkableFileContent : public QObject
 {
     Q_OBJECT
 public:
-    explicit RemarkableFileContent(QObject *parent = nullptr);
+//    explicit RemarkableFileContent(QObject *parent = nullptr);
 
-    RemarkableFileContent(QByteArray contentJson, QString uuid);
+    RemarkableFileContent(QByteArray contentJson, QString uuid= "");
 
-    const QString getFileDisplayName();
-    const QString getFileUUID();
+    const QString getFileDisplayName()
+    {
+        return doc["visibleName"].toString();
+    }
+    const QString getFileUUID()
+    {
+        return fileUUIDString;
+    }
+    const QString getType()
+    {
+        return doc["type"].toString();
+    }
+    const QString getParent()
+    {
+        return doc["parent"].toString();
+    }
 signals:
 
 private:

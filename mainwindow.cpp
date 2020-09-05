@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     rSSH = new RemarkableSSH("10.11.99.1");
+
     rSSH->mountToTemp();
 
     reMarkable = new RemarkableUserData(this);
@@ -49,6 +50,16 @@ void MainWindow::remarkableReady()
         i->setText(string);
         i->setIcon(QIcon(":/thumbnail/Images/pdf.png"));
         ui->listWidget->addItem(i);
+    }
+    for (auto folder : reMarkable->getFolders())
+    {
+        if(folder->getParent().isEmpty())
+        {
+            QListWidgetItem * i = new QListWidgetItem;
+            i->setText(folder->getFileDisplayName());
+            i->setIcon(QIcon(":/thumbnail/Images/folder-documents.png"));
+            ui->listWidget->addItem(i);
+        }
     }
 }
 

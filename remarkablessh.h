@@ -19,9 +19,11 @@ public slots:
     void shutdownDevice();
     void mountToTemp();
     void unmountFromTemp();
+
+    void runDebug();
 private slots:
     void readyReadStandardOutput();
-    void finished(int exitCode, QProcess::ExitStatus exitStatus);
+    void finished(int exitCode);
 signals:
 private:
     QProcess * ssh;

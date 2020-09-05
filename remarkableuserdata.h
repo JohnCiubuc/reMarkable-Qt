@@ -12,6 +12,10 @@ class RemarkableUserData : public QObject
     Q_OBJECT
 public slots:
     QStringList getPDFs();
+    const QList<RemarkableFileContent*> getFolders()
+    {
+        return remarkableFolders;
+    }
 public:
     explicit RemarkableUserData(QObject *parent = nullptr);
 
@@ -32,6 +36,8 @@ private:
     QDir homeDirectory;
 
     QList<RemarkableFileContent*> remarkableFiles;
+    QList<RemarkableFileContent*> remarkableNotes;
+    QList<RemarkableFileContent*> remarkableFolders;
 };
 
 #endif // REMARKABLEUSERDATA_H

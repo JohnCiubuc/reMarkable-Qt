@@ -130,5 +130,38 @@ void RemarkableUserData::startDebug()
             }
         }
     }
+    // 'Folders'
+    QStringList metadata = homeDirectory.entryList(QStringList() << "*.metadata", QDir::Files);
+    for(auto fileUUID : metadata)
+    {
+        //just get the name/uuid
+//        fileUUID.chop(10);
+
+        QFile f(homeDirectory.path() + "/"+  fileUUID);
+        if(f.open(QFile::ReadOnly))
+        {
+
+            auto rfc =  new RemarkableFileContent(f.readAll(), fileUUID.mid(0,fileUUID.size()-9));
+            if(rfc->getType() == "CollectionType")
+                remarkableFolders << rfc;
+            // not true for everything
+            else
+                remarkableNotes << rfc;
+            f.close();
+        }
+//        for (auto fileDescriptor : homeDirectory.entryList(QStringList() << fileUUID+".*", QDir::Files))
+//        {
+//            if(fileDescriptor.contains("metadata"))
+//            {
+//                QFile f(homeDirectory.path() + "/"+  fileDescriptor);
+//                if(f.open(QFile::ReadOnly))
+//                    remarkableFiles << new RemarkableFileContent(f.readAll(), fileUUID);
+//            }
+//        }
+    }
+    for (auto folder : remarkableFolders)
+    {
+        db folder->getFileDisplayName() <<" --- "<< folder->getFileUUID();
+    }
     emit ready();
 }
