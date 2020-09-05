@@ -14,7 +14,8 @@ Requires the following build tools and maybe some others:
 Create your public key for reMarkable, because this program can't login when prompted with a password:
 
 ```bash
-$ ssh-copy-id root@server_ip_address
+$ ssh-keygen -m PEM -t rsa -f ~/.ssh/remarkable -N ''
+$ ssh-copy-id -i ~/.ssh/remarkable.pub root@10.11.99.1
 ```
 
 where server_ip_address can be found via `Menu->Settings->About->Bottom left (scroll down)`
