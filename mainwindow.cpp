@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout, timer, &QTimer::deleteLater);
     timer->start(100);
 
+    setAcceptDrops(true);
 }
 
 MainWindow::~MainWindow()
@@ -45,14 +46,14 @@ void MainWindow::remarkableReady()
     ui->listWidget->clear();
     widgetMap.clear();
     // Remarkable has all files (pdfs currently)
-    for (auto string : reMarkable->getPDFs())
-    {
-        QListWidgetItem * i = new QListWidgetItem;
-        i->setText(string->getFileDisplayName());
-        i->setIcon(QIcon(":/thumbnail/Images/pdf.png"));
-        ui->listWidget->addItem(i);
-        widgetMap.insert(i, string);
-    }
+//    for (auto string : reMarkable->getPDFs())
+//    {
+//        QListWidgetItem * i = new QListWidgetItem;
+//        i->setText(string->getFileDisplayName());
+//        i->setIcon(QIcon(":/thumbnail/Images/pdf.png"));
+//        ui->listWidget->addItem(i);
+//        widgetMap.insert(i, string);
+//    }
     for (auto folder : reMarkable->getFolders())
     {
         QListWidgetItem * i = new QListWidgetItem;
@@ -161,5 +162,44 @@ void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     {
         db "Enter Folder - " << rfc->getFileDisplayName();
         reMarkable->enterFolder(rfc);
+    }
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    // if some actions should not be usable, like move, this code must be adopted
+    event->acceptProposedAction();
+}
+
+void MainWindow::dragMoveEvent(QDragMoveEvent* event)
+{
+    // if some actions should not be usable, like move, this code must be adopted
+    event->acceptProposedAction();
+}
+
+void MainWindow::dragLeaveEvent(QDragLeaveEvent *event)
+{
+
+    event->accept();
+}
+
+void MainWindow::dropEvent(QDropEvent *event)
+{
+    db "Drop - " << event->mimeData()->text();
+    return;
+    const QMimeData* mimeData = event->mimeData();
+
+    if (mimeData->hasUrls())
+    {
+        QStringList pathList;
+        QList<QUrl> urlList = mimeData->urls();
+
+        for (int i = 0; i < urlList.size() && i < 32; +i)
+        {
+            pathList.append(urlList.at(i).toLocalFile());
+        }
+
+//        if(openFiles(pathList))
+//            event->acceptProposedAction();
     }
 }

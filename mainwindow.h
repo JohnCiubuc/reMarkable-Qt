@@ -7,6 +7,14 @@
 #include <QDir>
 #include <QTimer>
 #include <QListWidgetItem>
+
+#include <QDrag>
+#include <QMimeData>
+#include <QDropEvent>
+
+#include <QDragLeaveEvent>
+#include <QDragMoveEvent>
+#include <QDragEnterEvent>
 #include "utilities.h"
 #include "remarkableuserdata.h"
 #include "remarkablessh.h"
@@ -45,5 +53,28 @@ private:
     RemarkableUserData * reMarkable;
     RemarkableSSH * rSSH;
     QMap<QListWidgetItem *,  RemarkableFileContent*> widgetMap;
+protected:
+    // —— events ———————————————————————————
+    /*
+     * this event is called when the mouse enters the widgets area during a drag/drop operation
+     */
+    void dragEnterEvent(QDragEnterEvent *event);
+
+    /**
+     * this event is called when the mouse moves inside the widgets area during a drag/drop operation
+     */
+    void dragMoveEvent(QDragMoveEvent *event);
+
+    /**
+     * this event is called when the mouse leaves the widgets area during a drag/drop operation
+     */
+    void dragLeaveEvent(QDragLeaveEvent *event);
+
+    /**
+     * this event is called when the drop operation is initiated at the widget
+     */
+    void dropEvent(QDropEvent *event);
+
+
 };
 #endif // MAINWINDOW_H

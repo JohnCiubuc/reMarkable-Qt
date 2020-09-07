@@ -5,6 +5,10 @@
 #include <QFile>
 #include <QDir>
 #include <QProcess>
+#include <QPixmap>
+#include <QPainter>
+#include <QPen>
+#include <QPainterPath>
 #include "utilities.h"
 #include "remarkablefilecontent.h"
 class RemarkableUserData : public QObject
@@ -24,7 +28,7 @@ public slots:
     }
     const QList<RemarkableFileContent*> getFolders();
     const QList<RemarkableFileContent*> getFiles();
-    const QString requestThumbnail(QString uuid);
+    const QPixmap requestThumbnail(QString uuid);
     void enterFolder(RemarkableFileContent * rfc);
 public:
     explicit RemarkableUserData(QObject *parent = nullptr);

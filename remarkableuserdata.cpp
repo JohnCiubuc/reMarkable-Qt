@@ -57,7 +57,7 @@ const QList<RemarkableFileContent *> RemarkableUserData::getFiles()
     return QList<RemarkableFileContent*>();
 }
 
-const QString RemarkableUserData::requestThumbnail(QString uuid)
+const QPixmap RemarkableUserData::requestThumbnail(QString uuid)
 {
     QFile f(homeDirectory.path() + "/"+  uuid + ".content");
     QString thumbnailId;
@@ -66,14 +66,24 @@ const QString RemarkableUserData::requestThumbnail(QString uuid)
         QJsonDocument doc = QJsonDocument::fromJson(f.readAll());
         int lastPage = doc["lastOpenedPage"].toInt();
         QJsonArray array = doc["pages"].toArray();
-        return homeDirectory.path() +
-               "/" +
-               uuid +
-               ".thumbnails/" +
-               array.at(lastPage).toString();
+        QPixmap original(homeDirectory.path() +
+                         "/" +
+                         uuid +
+                         ".thumbnails/" +
+                         array.at(lastPage).toString());
+
+//        QPixmap update(original.width()+10, original.width()+10);
+        QPainter *p = new QPainter(&original);
+        QPainterPath path;
+        path.addRect(0, 0, original.width(), original.height());
+        QPen pen(Qt::black, 10);
+        p->setPen(pen);
+        p->drawPath(path);
+        p->end();
+        return original;
     }
     else
-        return QString();
+        return QPixmap();
 
 }
 
