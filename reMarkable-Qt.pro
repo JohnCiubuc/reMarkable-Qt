@@ -11,12 +11,14 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    qdragdroplistwidget.cpp \
     remarkablefilecontent.cpp \
     remarkablessh.cpp \
     remarkableuserdata.cpp
 
 HEADERS += \
     mainwindow.h \
+    qdragdroplistwidget.h \
     remarkablefilecontent.h \
     remarkablessh.h \
     remarkableuserdata.h \
